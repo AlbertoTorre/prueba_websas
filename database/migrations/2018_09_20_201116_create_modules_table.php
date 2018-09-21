@@ -16,7 +16,7 @@ class CreateModulesTable extends Migration
         Schema::create('modules', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('parent_id')->default(0);
-            $table->string('name', 150);
+            $table->string('name', 180)->unique();
             $table->string('url',255)->default('#');
             $table->integer('order')->default(0);
             $table->enum('active',[0,1]);
