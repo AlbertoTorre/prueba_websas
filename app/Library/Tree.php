@@ -6,6 +6,7 @@ class Tree
 {
   public $_nameCode = 'id';
   public $_nameCodeParent = 'parent_id';
+  public $_namePublic = 'name';
   public $_textAccess = 'url';
 
   public $_listData;
@@ -19,7 +20,8 @@ class Tree
       $datosArray = array(
         'id' => $value[$this->_nameCode],
         'parent_id' => $value[$this->_nameCodeParent],
-        'url' => url('/').str_replace(' ', '', $value[$this->_textAccess] ),
+        'name' => $value[$this->_namePublic],
+        'url' => ($value[$this->_textAccess] !== '#')?url('/').str_replace(' ', '', $value[$this->_textAccess] ):'#',
         'order' => $value['order']
       );
 
