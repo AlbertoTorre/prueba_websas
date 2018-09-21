@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-	<module></module>
+	<module :modules="{{ $modules }}" ></module>
 @endsection
