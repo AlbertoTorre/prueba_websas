@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Modules;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -19,7 +20,7 @@ class ModuleController extends Controller
 		    'required'
 		  ],
 		  'url' => 'required',
-		  'active' => 'required|numeric'
+		  'active' => 'required'
 		]);
 	}
 
@@ -35,9 +36,12 @@ class ModuleController extends Controller
     {
     	if( $request->ajax() )
     	{
-			if( !$this->validator($request->all())->fails() )
+    		$d = $request->all();
+    		$d['active'] =  ( isset( $d['active'] ) )?'1':'0';
+
+			if( !$this->validator( $d )->fails() )
 			{
-	  	  		$mc = Module::create( $request->all() );
+	  	  		$mc = Module::create( $d );
 	    		if( $mc !== null )
 	    		{
 	    			$return = ['submit'=> true, 'msn'=> 'Menu creado correctamente.', 'id'=> $mc->id ];
@@ -53,7 +57,7 @@ class ModuleController extends Controller
 				$vv = $this->validator($request->all())->errors()->messages();
 				foreach ($vv as $ve)
 				{
-				  $errors.=' - '.array_shift($ve);
+				  $errors.=' - '.array_shift($ve).' <br> ';
 				}
 				$return = [ 'submit' => false, 'msn' => $errors ];
 	    	}
@@ -70,12 +74,13 @@ class ModuleController extends Controller
     {
     	if( $request->ajax() )
     	{
-			if( !$this->validator($request->all())->fails(), true)
+			$d = $request->all();
+			unset($d['parent_id']);
+			unset($d['id']);
+			$d['active'] =  ( isset( $d['active'] ) )?'1':'0';
+			
+			if( !$this->validator($d, true)->fails() )
 			{
-				$d = $request->all();
-				unset($d['parent_id']);
-				unset($d['id']);
-
 	  	  		$mu = Module::where('id', $request->input('id'))
 	  	  				   ->where('parent_id', $request->input('parent_id') )
 	  	  				   ->update( $d );
@@ -94,7 +99,7 @@ class ModuleController extends Controller
 				$vv = $this->validator($request->all())->errors()->messages();
 				foreach ($vv as $ve)
 				{
-				  $errors.=' - '.array_shift($ve);
+				  $errors.=' - '.array_shift($ve).' <br> ';
 				}
 				$return = [ 'submit' => false, 'msn' => $errors ];
 	    	}
@@ -106,16 +111,14 @@ class ModuleController extends Controller
     	}
     }
 
-    public function delete(Request $request)
+    public function delete(Request $request, $id)
     {
-    	if( $request->ajax() )
+    	if( $request->ajax() && $id)
     	{	
-    		$msp = Module::where('parent_id', $request->input('id') )->count();
-    		if( $msp )
+    		$msp = Module::where('parent_id', $id )->count();
+    		if( !$msp )
     		{
-	  	  		$md = Module::where('id', $request->input('id'))
-	  	  				   ->where('parent_id', $request->input('parent_id') )
-	  	  				   ->delete();
+	  	  		$md = Module::where('id', $id )->delete();
 	    		if( $md !== null )
 	    		{
 	    			$return = ['submit'=> true, 'msn'=> 'Menu elminado correctamente.' ];
