@@ -31,5 +31,8 @@
     "vee-validate": "^2.0.0-rc.25",
     "vue": "^2.1.10",
     "vue-resource": "^1.0.3"
+  },
+  "dependencies": {
+    "sass-loader": "^7.1.0"
   }
 }

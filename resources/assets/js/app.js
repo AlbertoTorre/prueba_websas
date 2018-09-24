@@ -1,4 +1,6 @@
-import Vue from 'vue'
+import './bootstrap'
+
+window.Vue = require('vue');
 
 import eventBus from './plugins/event-bus'
 

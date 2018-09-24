@@ -98,6 +98,10 @@
     <!-- Custom Theme JavaScript -->
     <script type="text/javascript" src="{{ url('/') }}/components/bootstrap-admin2/js/sb-admin-2.min.js"></script>
     
+    <script>
+        window.baseUrl = "{{ url('/') }}";
+    </script>
+
     <!-- Scripts -->
     <script src="{{ url('/') }}/js/app.js"></script>
 </body>

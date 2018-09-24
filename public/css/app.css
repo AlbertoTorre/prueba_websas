@@ -15,3 +15,15 @@
   padding: 6px 7px;
   border-radius: 0px;
 }
+.show-create-parents {
+  float: right;
+  margin-top: -7px;
+}
+.form-general {
+  position: absolute;
+  z-index: 2;
+  margin-top: -40px;
+  background-color: #c7c4c4;
+  padding: 7px;
+  left: 0;
+}
