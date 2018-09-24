@@ -21,4 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'module', 'middleware' => ['auth'] ], function () {
     Route::get('/','Modules\ModuleController@show');
+    Route::post('/create','Modules\ModuleController@create');
+    Route::post('/update','Modules\ModuleController@update');
+    Route::delete('/delete/{id}','Modules\ModuleController@delete');
 });
