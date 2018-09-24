@@ -21,8 +21,9 @@ class Tree
         'id' => $value[$this->_nameCode],
         'parent_id' => $value[$this->_nameCodeParent],
         'name' => $value[$this->_namePublic],
-        'url' => ($value[$this->_textAccess] !== '#')?url('/').str_replace(' ', '', $value[$this->_textAccess] ):'#',
-        'order' => $value['order']
+        'url' => ($value[$this->_textAccess] !== '#')?$value[$this->_textAccess]:'#',
+        'order' => $value['order'],
+        'childrens'=> []
       );
 
       $insert = $this->createTree( 
